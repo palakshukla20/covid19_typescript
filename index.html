@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel= "stylesheet" href= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src= "https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity= "sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src= "https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity= "sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity= "sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+  <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src= "https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+  <script src= "https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+  <script src= "https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+  <meta name= "viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel= "stylesheet" href= "css/main.css">
+</head>
+<body>
+<div class= "body">
+  <div class = "main d-flex flex-wrap" >
+    <div class= "Navbar_ bg-light navbar-collapse">
+      <nav class= "Navbar navbar-light bg-light">
+        <div class= "nav-item-head">
+          <a class= "navbar-brand" href="#">COVID19<br><span>India</span></a>
+        </div> 
+        <ul class= "navbar-nav">
+          <li class= "nav-item active">
+            <a class= "nav-link" href= "#"><i class= "fas fa-home"></i><span>Home</span></a>
+          </li> 
+          <li class= "nav-item"> 
+            <a class= "nav-link" href="#"><i class= "fas fa-book"></i><span>Blog</span></a>
+          </li>
+          <li class= "nav-item">
+            <a class= "nav-link" href="#"><i class= "far fa-question-circle"></i><span>About</span></a>
+          </li>
+          <li class= "nav-item">
+            <a class= "nav-link" href="#"><i class= "far fa-moon"></i><span class= "span-last">A croudsourced initiative</span></a>
+          </li>
+         <!-- <li class= "nav-link-last"> 
+          <a  href= "#">English</a>
+         </li> -->
+        </ul>
+      </nav>
+    </div>
+    <div class= "body-middle">
+      <div class= "table-body">
+        <div class= "search-center">
+          <div class= "search">
+            <p>Search your district and state</p>
+            <div class= "search-box">
+              <div class= "search-button">
+                <span><i class= "fa fa-search" aria-hidden= "true"></i></span>
+              </div>
+              <input id= "searchBar" type= "text" value= ""><br>
+              <div id="autocomplete"></div>
+            </div>
+          </div>
+        </div>
+        <div class= "row map-card" id= "map-card"></div>
+        <script type= "text/template" id= "total-data">
+          {{#India}} 
+            <!-- <div class= "row w-100 pb-0" style= "height: 150px">
+              <div class= "dropdown ml-0 mr-auto">
+                <button class= "header-upper-text" type= "button"><h1>India</h1></button>
+              </div>
+              <p>Last updated on  {{lastUpdate}}</p>
+              <div class= "mr-0 ml-auto">
+                <h5>Active</h5>
+                <h6>{{active}}</h6>
+                <h5>{{lastUpdate}}</h5>
+              </div>
+            </div> -->
+            <div class= "map-card-card1" onclick= "isActive(this)">
+              <p>Confirmed</p>
+              <span>{{#deltaConfirmed}}+{{deltaConfirmed}}{{/deltaConfirmed}}
+                {{^deltaConfirmed}}<i class= "fas fa-heart"></i>{{/deltaConfirmed}}</span>
+              <h3>{{confirmed}}</h3>
+              <svg width= "100" height= "75" viewBox= "0 0 100 75" preserveAspectRatio= "xMidYMid meet">
+                <path fill= "none" stroke= "#ff073a99" stroke-width= "2.5" d=" M5,28.11557788944723C6.5,28.11557788944723,8,28.11557788944723,9.5,28.11557788944723C11,28.11557788944723,12.5,23.366834170854275,14,23.366834170854275C15.5,23.366834170854275,17,27.353433835845898,18.5,27.587939698492463C20,27.822445561139027,21.5,27.705192629815745,23,27.93969849246231C24.5,28.174204355108873,26,32.95226130653266,27.5,32.95226130653266C29,32.95226130653266,30.5,30.57788944723618,32,30.22613065326633C33.5,29.87437185929648,35,30.050251256281406,36.5,29.698492462311556C38,29.346733668341706,39.5,24.42211055276382,41,24.42211055276382C42.5,24.42211055276382,44,24.480737018425458,45.5,24.59798994974874C47,24.715242881072022,48.5,29.78643216080402,50,29.78643216080402C51.5,29.78643216080402,53.00000000000001,24.15829145728643,54.50000000000001,24.15829145728643C56.00000000000001,24.15829145728643,57.5,25.902428810720274,59,26.444723618090457C60.5,26.987018425460644,62,27.133584589614742,63.5,27.412060301507537C65,27.690536013400333,66.5,28.11557788944723,68,28.11557788944723C69.5,28.11557788944723,71,27.236180904522612,72.5,27.236180904522612C74,27.236180904522612,75.5,27.353433835845895,77,27.587939698492463C78.5,27.82244556113903,80,29.889028475711893,81.5,30.84170854271357C83,31.794388609715245,84.5,33.30402010050251,86,33.30402010050251C87.5,33.30402010050251,89,32.395309882747064,90.5,31.984924623115575C92,31.574539363484085,93.5,31.208123953098827,95,30.84170854271357" stroke-dasharray="108.55895233154297" stroke-dashoffset="0"></path>
+                <circle fill= "#ff073a" r="2.5" cx="95" cy= "30.84170854271357"></circle>
+              </svg>
+            </div>
+            <div class= "map-card-card2 active" onclick= "isActive(this)">
+              <p>Active</p>
+              <span>a</span>
+              <h3>{{active}}</h3>
+              <svg width= "100" height= "75" viewBox= "0 0 100 75" preserveAspectRatio= "xMidYMid meet">
+                <path fill= "none" stroke= "#007bff99" stroke-width="2.5" d= "M5,39.6356783919598C6.5,44.07663316582915,8,48.517587939698494,9.5,48.517587939698494C11,48.517587939698494,12.5,39.54773869346734,14,39.54773869346734C15.5,39.54773869346734,17,63.2035175879397,18.5,63.2035175879397C20,63.2035175879397,21.5,42.801507537688444,23,42.801507537688444C24.5,42.801507537688444,26,52.650753768844226,27.5,52.650753768844226C29,52.650753768844226,30.5,51.463567839195974,32,50.54020100502512C33.5,49.61683417085426,35,47.69681742043551,36.5,47.11055276381909C38,46.52428810720268,39.5,46.28978224455613,41,46.231155778894475C42.5,46.17252931323282,44,46.143216080402,45.5,46.143216080402C47,46.143216080402,48.5,50.54020100502512,50,50.54020100502512C51.5,50.54020100502512,53.00000000000001,42.361809045226124,54.50000000000001,42.361809045226124C56.00000000000001,42.361809045226124,57.5,43.94472361809046,59,43.94472361809046C60.5,43.94472361809046,62,42.7428810720268,63.5,42.361809045226124C65,41.98073701842545,66.5,41.65829145728643,68,41.65829145728643C69.5,41.65829145728643,71,41.77554438860972,72.5,42.01005025125628C74,42.244556113902846,75.5,42.56700167504187,77,43.68090452261306C78.5,44.79480737018425,80,58.27889447236181,81.5,58.27889447236181C83,58.27889447236181,84.5,53.70603015075377,86,53.70603015075377C87.5,53.70603015075377,89,54.849246231155774,90.5,54.849246231155774C92,54.849246231155774,93.5,53.48618090452261,95,52.12311557788944" stroke-dasharray="168.66925048828125" stroke-dashoffset="0"></path>
+                <circle fill= "#007bff" r= "2.5" cx= "95" cy= "52.12311557788944"></circle>
+              </svg>
+            </div>
+            <div class= "map-card-card3"  onclick= "isActive(this)">
+              <p>Recoverd</p>
+              <span>{{#deltaRecovered}}+{{deltaRecovered}}{{/deltaRecovered}}
+                {{^deltaRecovered}}<i class= "fas fa-heart"></i>{{/deltaRecovered}}
+              </span>
+              <h3>{{recovered}}</h3>
+              <svg width= "100" height= "75" viewBox= "0 0 100 75" preserveAspectRatio= "xMidYMid meet">
+                <path fill= "none" stroke= "#28a74599" stroke-width= "2.5" d= "M5,34.18341708542714C6.5,29.962311557788944,8,25.741206030150753,9.5,25.741206030150753C11,25.741206030150753,12.5,29.610552763819094,14,29.610552763819094C15.5,29.610552763819094,17,10,18.5,10C20,10,21.5,30.84170854271357,23,30.84170854271357C24.5,30.84170854271357,26,26.180904522613062,27.5,25.829145728643216C29,25.47738693467337,30.5,25.301507537688444,32,25.301507537688444C33.5,25.301507537688444,35,28.11557788944723,36.5,28.11557788944723C38,28.11557788944723,39.5,23.806532663316588,41,23.806532663316588C42.5,23.806532663316588,44,24.51005025125628,45.5,24.77386934673367C47,25.037688442211056,48.5,25.02303182579565,50,25.389447236180906C51.5,25.755862646566168,53.00000000000001,26.532663316582916,54.50000000000001,26.97236180904523C56.00000000000001,27.412060301507537,57.5,27.412060301507537,59,28.02763819095477C60.5,28.643216080402006,62,30.035594639865998,63.5,30.665829145728644C65,31.29606365159129,66.5,31.809045226130657,68,31.809045226130657C69.5,31.809045226130657,71,31.398659966499164,72.5,31.017587939698494C74,30.636515912897824,75.5,30.519262981574542,77,29.522613065326635C78.5,28.525963149078727,80,18.61809045226131,81.5,18.61809045226131C83,18.61809045226131,84.5,25.125628140703522,86,25.125628140703522C87.5,25.125628140703522,89,23.103015075376884,90.5,23.103015075376884C92,23.103015075376884,93.5,23.67462311557789,95,24.246231155778897" stroke-dasharray="148.8032989501953" stroke-dashoffset="0"></path>
+                <circle fill= "#28a745" r= "2.5" cx= "95" cy= "24.246231155778897"></circle>
+              </svg>
+            </div>
+            <div class= "map-card-card4" onclick= "isActive(this)">
+              <p>Deceased</p> 
+              <span>{{#deltaDeceased}}+{{deltaDeceased}}{{/deltaDeceased}}
+                {{^deltaDeceased}}<i class= "fas fa-heart"></i>{{/deltaDeceased}}
+              </span>
+              <h3>{{deceased}}</h3>
+              <svg width= "100" height= "75" viewBox= "0 0 100 75" preserveAspectRatio= "xMidYMid meet">
+                <path fill= "none" stroke= "#6c757d99" stroke-width= "2.5" d= "M5,44.2964824120603C6.5,44.07663316582914,8,43.85678391959799,9.5,43.85678391959799C11,43.85678391959799,12.5,44.120603015075375,14,44.20854271356784C15.5,44.2964824120603,17,44.38442211055277,18.5,44.38442211055277C20,44.38442211055277,21.5,44.2964824120603,23,44.2964824120603C24.5,44.2964824120603,26,44.47236180904523,27.5,44.47236180904523C29,44.47236180904523,30.5,44.38442211055277,32,44.38442211055277C33.5,44.38442211055277,35,44.47236180904523,36.5,44.47236180904523C38,44.47236180904523,39.5,44.44304857621441,41,44.38442211055277C42.5,44.32579564489113,44,43.68090452261306,45.5,43.68090452261306C47,43.68090452261306,48.5,43.7395309882747,50,43.85678391959799C51.5,43.97403685092127,53.00000000000001,44.824120603015075,54.50000000000001,44.824120603015075C56.00000000000001,44.824120603015075,57.5,44.53098827470687,59,44.47236180904523C60.5,44.41373534338359,62,44.38442211055277,63.5,44.38442211055277C65,44.38442211055277,66.5,44.64824120603015,68,44.64824120603015C69.5,44.64824120603015,71,44.20854271356784,72.5,44.20854271356784C74,44.20854271356784,75.5,44.38442211055277,77,44.38442211055277C78.5,44.38442211055277,80,43.94472361809046,81.5,43.94472361809046C83,43.94472361809046,84.5,44.47236180904523,86,44.47236180904523C87.5,44.47236180904523,89,44.03266331658292,90.5,44.03266331658292C92,44.03266331658292,93.5,44.252512562814076,95,44.47236180904523" stroke-dasharray="90.40802001953125" stroke-dashoffset="0"></path>
+                <circle fill= "#6c757d" r= "2.5" cx= "95" cy= "44.47236180904523"></circle>
+              </svg>
+            </div>
+          {{/India}}
+        </script>
+        <div class= "table">
+          <div class= "table-head">
+            <button class= "sort-table-left-state">
+              <span><i class= "fas fa-sort"></i></span>
+            </button>
+            <button class= "sort-table-left">
+              <span class= "sort-table-span">10L</span>
+            </button>
+            <button class= "sort-table-left-ques">
+              <span><i class= "far fa-question-circle"></i></span>
+            </button>
+            <button class= "sort-table-right">
+             <span><i class= "fas fa-ellipsis-v"></i><i class= "fas fa-arrow-right"></i></span>
+            </button>
+          </div>
+          <div class= "sort-table-ques">
+            <div class= "info-left">
+              <span><i class= "fas fa-sort"></i></span>
+              <p>Toggle between States/Districts</p>
+              <p>Units</p>
+            </div>
+            <div class= "info-left">
+              <span class= "info-left-span">10L</span><p>Per Ten Lakh People</p>
+              <p>1K</p><p><var>10<sup>3</sup></var></p>
+            </div>
+            <div class= "info-left">
+              <span><i class= "fas fa-sort-down"></i></span><p>Sort by Descending</p>
+              <p>1L</p><p><var>10<sup>5</sup></var></p>
+            </div>
+            <div class= "info-left">
+              <span><i class= "fas fa-sort-up"></i></i></span><p>Sort by Ascending</p>
+              <p>1Cr</p><p><var>10<sup>7</sup></var></p>
+            </div>
+            <div class= "info-left">
+              <span><i class= "fas fa-sort-down"></i></span><p>Sort by Delta [long press]</p>
+            </div> 
+            <div class= "info-left">
+              <span><i class= "far fa-question-circle"></i></span><p>Notes</p>
+            </div> 
+          </div>
+          <table class= "table-bordered w-100">
+            <thead>
+              <th class= "w-25">State/UT</th>
+              <th>Confirmed</th>
+              <th>Active</th>
+              <th>Recovered</th>
+              <th>Deceased</th>
+              <th class= "table-hide">Other</th>
+              <th>Active Ratio</th>
+              <th>Recovery Ratio</th>
+              <th>Case fatality</th>
+            </thead>
+            <tbody id= "body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class= "body-right">
+      <div class= "body-right-lower">
+        <div class= "spread">
+          <h2>Spread Trends</h2>
+        </div>
+        <div class= "select-box">
+          <select class= "select-state"><i class= "fa fa-reply" aria-hidden= "true"></i>
+            <option value = "TT">India</option>
+          </select>
+        </div>
+        <div class= "chart">
+          <div id= "chartContainer1"></div>
+          <div id= "chart1"></div>
+        </div><br>
+        <div class= "chart">
+          <div id= "chartContainer2"></div>
+          <div id= "chart2"></div>
+        </div><br>
+        <div class= "chart">
+          <div id= "chartContainer3"></div>
+          <div id= "chart3"></div>
+        </div><br>
+        <div class= "chart">
+          <div id= "chartContainer4"></div>
+          <div id= "chart4"></div>
+        </div><br>
+      </div>
+    </div>
+  </div>
+  <script id= "template" type= "text/template">
+    {{#result}}
+    <tr>
+      <th class= "w-25">
+        <span>{{stateName}}</span>
+      </th>
+      <td><span id= "delta-1">
+        {{#deltaConfirmed}} <i class= "fas fa-arrow-up"></i>{{deltaConfirmed}} {{/deltaConfirmed}}</span><br>
+        {{confirmed}}
+      </td>
+      <td>{{active}}</td> 
+      <td><span id= "delta-2">
+        {{#deltaRecovered}} <i class= "fas fa-arrow-up"></i>{{deltaRecovered}} {{/deltaRecovered}}</span><br>
+        {{recovered}}
+      </td>
+      <td><span id= "delta-3">
+        {{#deltaDeceased}} <i class= "fas fa-arrow-up"></i>{{deltaDeceased}} {{/deltaDeceased}}</span><br>
+        {{deceased}}
+      </td>
+      <td  class= "table-hide">{{other}} {{^other}} 0 {{/other}}</td>
+      <td>{{activeRatio}}%</td>
+      <td>{{recoveryRatio}}%</td>
+      <td>{{caseFatality}}% {{^caseFatality}}0{{/caseFatality}}</td>
+    </tr>
+    <tr class= "district">
+      <th class= "district-icon" colspan= "1">
+        <i class= "far fa-clock"> </i>
+        <span> Last updated on {{lastUpdate}}</span>
+      </th>
+    </tr>
+    {{/result}}
+ </script>
+  <footer>
+    <div class= "footer name">
+      <a href= "#"> COVID19INDIA</a>
+    </div>
+    <p>We stand with everyone fighting on the fontlines</p>
+    <div class= "social_icon">
+      <a href= "#"><i class= "social_icon_1 fab fa-github"></i></a>
+      <a href= "#"><i class= "social_icon_2 fab fa-telegram"></i></a>
+      <a href= "#"><i class= "social_icon_3 fab fa-twitter"></i></a>
+      <a href= "#"><i class= "social_icon_4 fa fa-envelope"></i></a>
+    </div>
+  </footer>
+</div>  
+<script>var exports = {};</script>
+<script src= "js/chart.js"></script>
+<script src= "js/main.js"></script>
+</body>
+</html>

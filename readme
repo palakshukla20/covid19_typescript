@@ -1,0 +1,9 @@
+for mustache 
+  npm install --save @types/mustache
+
+for canvasjs
+  npm install canvasjs
+  npm install --save @types/canvasjs
+
+for jQuery
+  npm install --save @types/jquery
