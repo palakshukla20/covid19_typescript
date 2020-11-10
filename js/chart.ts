@@ -50,7 +50,7 @@ class Chart {
     });
    chart.render();
   }
-  getDataPoints(x: Date , y: number):IDataPoint {
+  getDataPoints(x: Date , y: number): IDataPoint {
     return {x, y}
   }
 }
@@ -64,7 +64,7 @@ $(".select-state").on("change", function() {
 })
 
 function showChart(state: any): void {
-  var dataPoint1:any = [], dataPoint2:any = [], dataPoint3:any = [], dataPoint4:any = [];
+  var dataPoint1: any = [], dataPoint2: any = [], dataPoint3: any = [], dataPoint4: any = [];
   $.getJSON("https://api.covid19india.org/v4/min/timeseries.min.json", function( data) {
     var chart= new Chart();
     $.each(data, function(key:string, val:any) {
