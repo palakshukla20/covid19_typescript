@@ -68,7 +68,7 @@ $.ajax ({
     var data = JSON.parse(response.responseText);
     var searchTags = [];
     var total = []
-    var object:any = {}
+    var object: any = {}
     for (let x in data) {
       if (x == "statewise") {
         $.each(data[x], function(key, value) {
